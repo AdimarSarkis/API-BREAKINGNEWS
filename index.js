@@ -12,11 +12,7 @@ const userRoute = require("./src/routes/user.route")
 
     // Name - Um identificador da rota
     // Function (Callback) - Responsável por executar algum comando 
-/* app.get("/", (req, res) => {
-    const soma = 1 + 7;
-    //res.json(soma)
-    res.send({soma: soma});
-})*/
-
-app.use("/soma", userRoute)
-app.listen(3000);
+const port = 3000;
+app.use(express.json());
+app.use("/user", userRoute)
+app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
