@@ -1,5 +1,6 @@
 const userService = require("../services/user.service");
 const mongoose = require("mongoose");
+
 const create = async (req, res) => {
   const { name, username, email, password, avatar, background } = req.body;
 
@@ -43,13 +44,47 @@ const findAll = async (req, res) => {
 const findById = async (req, res) => {
   const id = req.params.id; // peguei o id
 
-  if (!mongoose.Types.ObjectId.isValid(id)){ // testa o id
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    // testa o id
     return res.status(400).send({ message: "Invalid ID" });
   }
 
   const user = await userService.findByIdService(id); // conecta e busca no banco
 
-  !user ? res.status(400).send({ message: "User not find" }) : res.send(user);
+  !user ? res.status(400).send({ message: "User not found" }) : res.send(user);
 };
 
-module.exports = { create, findAll, findById };
+const update = async (req, res) => {
+  // pega os campos do body
+  const { name, username, email, password, avatar, background } = req.body;
+
+  if (!name && !username && !email && !password && !avatar && !background) {
+    res.status(400).send({ message: "Submit at least one fields for update" });
+  }
+
+  const id = req.params.id; // pega o id para ver se tem uma conta cadastrada
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    // testa o id
+    return res.status(400).send({ message: "Invalid ID" });
+  }
+
+  const user = await userService.findAllService(id);
+  // procura o user com base no id, se possuir mostra se não, não
+  if (!user) {
+    res.status(400).send({ message: "User not found" });
+  }
+
+  await userService.updateService(
+    id,
+    name,
+    username,
+    email,
+    password,
+    avatar,
+    background
+  );
+
+  res.send({message: "User Successufully updated"})
+};
+module.exports = { create, findAll, findById, update };
