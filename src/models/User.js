@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 // criando um modelo de uma tabela para tornar o mongoDB relacional
 const UserSchema = new mongoose.Schema({
     name: {
@@ -30,4 +30,4 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", UserSchema);
 
-module.exports = User;  
+export default User;  

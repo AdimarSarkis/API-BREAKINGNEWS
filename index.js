@@ -1,7 +1,6 @@
-const express = require("express");
-const app = express();
-const userRoute = require("./src/routes/user.route");
-const connectDatabase = require("./src/database/db");
+import express from "express";
+import userRoute from "./src/routes/user.route.js";
+import connectDatabase from "./src/database/db.js";
 // ROTA
 // Method HTTP - CRUD(CREATE - post, READ - get, UPDATE - put/patch, DELETE)
 // GET: Pega um info
@@ -12,6 +11,7 @@ const connectDatabase = require("./src/database/db");
 
 // Name - Um identificador da rota
 // Function (Callback) - Responsável por executar algum comando
+const app = express();
 const port = 3000;
 
 connectDatabase();
