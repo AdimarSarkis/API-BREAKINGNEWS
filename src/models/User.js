@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt"; // criptografar senha
 // criando um modelo de uma tabela para tornar o mongoDB relacional
 const UserSchema = new mongoose.Schema({
     name: {
@@ -12,11 +13,13 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         require: true,
-        unique: true
+        unique: true,
+        lowercase: true
     },
     password: {
         type: String,
-        require: true
+        require: true,
+        select: false
     },
     avatar: {
         type: String,
@@ -27,7 +30,11 @@ const UserSchema = new mongoose.Schema({
         require: true
     }
 });
-
+// essa função não pode ser arrow function
+UserSchema.pre("save", async function(next){ // antes de salvar faça a seguinte função
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+})
 const User = mongoose.model("User", UserSchema);
 
 export default User;  
