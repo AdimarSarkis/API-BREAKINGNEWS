@@ -3,7 +3,11 @@ const connectDatabase = () => {
   console.log("Wait connecting to the database");
   mongoose
     .connect(
-      "mongodb+srv://adimar:adimar1999@mern.usrxkox.mongodb.net/?retryWrites=true&w=majority&appName=MERN",
+      process.env.MONGODB_URI,
+       // precisa de uma biblioteca chamada dotenv
+      // converte tudo para string
+      // guardar dados sensíveis no .env e puxar elas pelo process.env.variavel
+      
       {
         /* useNewUrlParser: true, useUnifiedTopology: true*/
       }
