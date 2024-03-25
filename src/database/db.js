@@ -12,7 +12,7 @@ const connectDatabase = () => {
         /* useNewUrlParser: true, useUnifiedTopology: true*/
       }
     )
-    .then(() => console.log("MongoDB Atlas connect"))
+    .then(() => console.log("MongoDB Atlas connected"))
     .catch((error) =>
       console.log(`COULD NOT CONNECT TO DATABASE: ${error.message}`)
     );
