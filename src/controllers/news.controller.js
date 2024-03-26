@@ -9,10 +9,10 @@ const create = async (req, res) => {
     }
 
     await createService({
-        title,
-        text,
-        banner,
-        id: "object ID"
+      title,
+      text,
+      banner,
+      user: { _id: "65f8788c5d80accc1e4ae2fb" },
     });
     res.send(201);
   } catch (err) {
@@ -20,8 +20,13 @@ const create = async (req, res) => {
   }
 };
 
-const findAll = (req, res) => {
-  const news = [];
+const findAll = async (req, res) => {
+  const news = await findAllService();
+  if (news.length === 0) {
+    return res.status(400).send({
+      message: "There are no registered news",
+    });
+  }
   res.send(news);
 };
 
